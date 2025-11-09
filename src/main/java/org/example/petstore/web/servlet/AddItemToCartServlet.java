@@ -24,16 +24,21 @@ public class AddItemToCartServlet extends HttpServlet {
         if (cart == null) {
             cart = new Cart();
         }
-        if (cart.containsItemId(workingItemId)) {
-            cart.incrementQuantityByItemId(workingItemId);
-        } else {
-            CatalogService catalogService = new CatalogService();
-            boolean isInStock = catalogService.isItemInStock(workingItemId);
-            Item item = catalogService.getItem(workingItemId);
-            cart.addItem(item, isInStock);
+        if (workingItemId != null) {
+            if (cart.containsItemId(workingItemId)) {
+                cart.incrementQuantityByItemId(workingItemId);
+            } else {
+                CatalogService catalogService = new CatalogService();
+                boolean isInStock = catalogService.isItemInStock(workingItemId);
+                Item item = catalogService.getItem(workingItemId);
+                if (item != null) {
+                    cart.addItem(item, isInStock);
+                }
+            }
         }
 
         session.setAttribute("cart", cart);
-        req.getRequestDispatcher(CART_FORM).forward(req, resp);
+        // 改为重定向
+        resp.sendRedirect(req.getContextPath() + "/cartForm");
     }
 }
