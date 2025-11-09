@@ -5,16 +5,18 @@
 </div>
 
 <div id="Catalog">
-
+    <td>${sessionScope.product.name}</td>
     <table>
         <tr>
+            <td>${sessionScope.product.name}</td>
             <td>${sessionScope.product.description}</td>
         </tr>
         <tr>
             <td><b> ${sessionScope.item.itemId} </b></td>
         </tr>
         <tr>
-            <td><b><font size="4"> ${sessionScope.item.attribute1}
+            <td><b><font size="4">
+                ${sessionScope.item.attribute1}
                 ${sessionScope.item.attribute2} ${sessionScope.item.attribute3}
                 ${sessionScope.item.attribute4} ${sessionScope.item.attribute5}
                 ${sessionScope.product.name} </font></b></td>
@@ -36,7 +38,7 @@
 
         <tr>
             <td>
-            <a href="#" class="Button">Add to Cart</a>
+            <a href="addItemToCart?workingItemId=${item.itemId}" class="Button">Add to Cart</a>
             </td>
         </tr>
     </table>

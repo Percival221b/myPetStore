@@ -25,7 +25,7 @@ public class ItemDaoImpl implements ItemDao {
             "SELECT QTY AS value FROM INVENTORY WHERE ITEMID = ?";
 
     private static final String updateInventoryQuantity=
-            "    UPDATE INVENTORY SET QTY = QTY - ? WHERE ITEMID = ?";
+            "UPDATE INVENTORY SET QTY = QTY - ? WHERE ITEMID = ?";
 
     @Override
     public void updateInventoryQuantity(Map<String, Object> param) {
@@ -115,6 +115,18 @@ public class ItemDaoImpl implements ItemDao {
                 item.setListPrice(resultSet.getBigDecimal(2));
                 item.setUnitCost(resultSet.getBigDecimal(3));
                 item.setSupplierId(resultSet.getInt(4));
+                Product product = new Product();
+                product.setProductId(resultSet.getString(5));
+                product.setName(resultSet.getString(6));
+                product.setDescription(resultSet.getString(7));
+                product.setCategoryId(resultSet.getString(8));
+                item.setProduct(product);
+                item.setStatus(resultSet.getString(9));
+                item.setAttribute1(resultSet.getString(10));
+                item.setAttribute2(resultSet.getString(11));
+                item.setAttribute3(resultSet.getString(12));
+                item.setAttribute4(resultSet.getString(13));
+                item.setAttribute5(resultSet.getString(14));
             }
             DBUtil.closeResultSet(resultSet);
             DBUtil.closePreparedStatement(pStatement);
