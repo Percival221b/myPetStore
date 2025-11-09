@@ -20,7 +20,7 @@
         <c:forEach var="item" items="${sessionScope.itemList}">
             <tr>
                 <td><
-                    <a href="#">${item.itemId}</a></td>
+                    <a href="itemForm?itemId=${item.itemId}">${item.itemId}</a></td>
                 </td>
                 <td>${item.product.productId}</td>
                 <td>${item.attribute1} ${item.attribute2} ${item.attribute3}
