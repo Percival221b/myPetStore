@@ -38,6 +38,18 @@
         <servlet-name>RemoveCartItemServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.RemoveCartItemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SignOnFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.SignOnFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignOnServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.SignOnServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewOrderFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.NewOrderFormServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>MainFormServlet</servlet-name>
@@ -70,6 +82,18 @@
     <servlet-mapping>
         <servlet-name>RemoveCartItemServlet</servlet-name>
         <url-pattern>/removeCartItem</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignOnFormServlet</servlet-name>
+        <url-pattern>/signOnForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignOnServlet</servlet-name>
+        <url-pattern>/signOn</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewOrderFormServlet</servlet-name>
+        <url-pattern>/newOrderForm</url-pattern>
     </servlet-mapping>
 
 

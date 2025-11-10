@@ -1,16 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: perci
-  Date: 2025/11/9
-  Time: 13:59
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+<c:if test="${!empty sessionScope.myList}">
+    <p>Pet Favorites <br />
+        Shop for more of your favorite pets here.</p>
+    <ul>
+        <c:forEach var="product" items="${sessionScope.myList}">
+            <li>
+                <a href="productForm?productId=${product.productId}">${product.name}</a>
+                (${product.productId})</li>
+        </c:forEach>
+    </ul>
+
+</c:if>
+
