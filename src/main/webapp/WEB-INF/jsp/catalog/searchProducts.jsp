@@ -1,16 +1,32 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: perci
-  Date: 2025/11/9
-  Time: 13:59
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ include file="../common/Top.jsp"%>
 
-</body>
-</html>
+<div id="BackLink">
+    <a href="">return to Main Menu</a>
+</div>
+
+<div id="Catalog">
+
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Product ID</th>
+            <th>Name</th>
+        </tr>
+        <c:forEach var="product" items="${sessionScope.productList}">
+            <tr>
+                <td>
+                        ${product.name}
+                </td>
+                <td>${product.description}</td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/productForm?productId=${product.productId}">View Details</a>
+                </td>
+            </tr>
+        </c:forEach>
+
+
+    </table>
+
+</div>
+
+<%@ include file="../common/Bottom.jsp"%>
