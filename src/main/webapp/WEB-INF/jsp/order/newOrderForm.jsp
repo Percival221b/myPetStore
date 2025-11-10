@@ -12,5 +12,9 @@
 </head>
 <body>
 
+<div id="Catalog">
+    这是新建订单页面。
+</div>
+
 </body>
 </html>

@@ -24,10 +24,14 @@
             <div id="MenuContent">
                 <a href="cartForm"><img align="middle" name="img_cart" src="images/cart.gif" /></a>
                 <img align="middle" src="images/separator.gif" />
-                <a href="#">Sign In</a>
-                <a href="#">Sign Out</a>
-                <img align="middle" src="images/separator.gif" />
-                <img align="middle" src="images/separator.gif" />
+                <c:if test="${sessionScope.loginAccount == null}">
+                    <a href="signOnForm">Sign In</a>
+                    <img align="middle" src="images/separator.gif" />
+                </c:if>
+                <c:if test="${sessionScope.loginAccount != null}">
+                    <a href="#">Sign Out</a>
+                    <img align="middle" src="images/separator.gif" />
+                </c:if>
                 <a href="help.html">?</a></div>
         </div>
 
