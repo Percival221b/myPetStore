@@ -37,10 +37,10 @@
 
         <div id="Search">
             <div id="SearchContent">
-            <form action="" method="post">
-                <input type="text" name="keyword" size="14" />
-                <input type="submit" value="Search" />>
-            </form>
+                <form action="search" method="post">
+                    <input type="text" name="keyword" size="14" />
+                    <input type="submit" value="Search" />>
+                </form>
             </div>
         </div>
 
