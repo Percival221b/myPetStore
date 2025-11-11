@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class NewOrderFormServlet extends HttpServlet {
 
-    private static final String New_OrderForm = "/WEB-INF/jsp/order/newOrder.jsp";
+    private static final String New_OrderForm = "/WEB-INF/jsp/order/newOrderForm.jsp";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();

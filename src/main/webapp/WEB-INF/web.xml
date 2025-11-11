@@ -54,6 +54,26 @@
         <servlet-name>NewOrderFormServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.NewOrderFormServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewOrderConfirmedServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.NewOrderConfirmedServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.ShippingFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShippingSubmitServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.ShippingSubmitServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrderFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.ViewOrderFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListOrdersServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.ListOrdersServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>MainFormServlet</servlet-name>
@@ -102,6 +122,26 @@
     <servlet-mapping>
         <servlet-name>NewOrderFormServlet</servlet-name>
         <url-pattern>/newOrderForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewOrderConfirmedServlet</servlet-name>
+        <url-pattern>/newOrderConfirmed</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingFormServlet</servlet-name>
+        <url-pattern>/shippingForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShippingSubmitServlet</servlet-name>
+        <url-pattern>/shippingSubmit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderFormServlet</servlet-name>
+        <url-pattern>/viewOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrdersServlet</servlet-name>
+        <url-pattern>/listOrders</url-pattern>
     </servlet-mapping>
 
 
