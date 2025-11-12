@@ -1,16 +1,32 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: perci
-  Date: 2025/11/9
-  Time: 13:58
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ include file="../common/top.jsp"%>
 
-</body>
-</html>
+<div id="Catalog"><stripes:form
+        beanclass="org.mybatis.jpetstore.web.actions.AccountActionBean"
+        focus="">
+
+    <h3>User Information</h3>
+
+    <table>
+        <tr>
+            <td>User ID:</td>
+            <td>${actionBean.username}</td>
+        </tr>
+        <tr>
+            <td>New password:</td>
+            <td><stripes:text name="password" /></td>
+        </tr>
+        <tr>
+            <td>Repeat password:</td>
+            <td><stripes:text name="repeatedPassword" /></td>
+        </tr>
+    </table>
+    <%@ include file="includeAccountFields.jsp"%>
+
+    <stripes:submit name="editAccount" value="Save Account Information" />
+
+</stripes:form> <stripes:link
+        beanclass="org.mybatis.jpetstore.web.actions.OrderActionBean"
+        event="listOrders">My Orders</stripes:link></div>
+
+<%@ include file="../common/bottom.jsp"%>
+

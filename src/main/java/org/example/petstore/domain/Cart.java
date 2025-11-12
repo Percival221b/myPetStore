@@ -12,6 +12,9 @@ import java.util.Map;
 
 public class Cart implements Serializable {
 
+    private int cartId;          // 对应数据库表 cart 的主键
+    private String username;     // 购物车所属用户
+
     private static final long serialVersionUID = 8329559983943337176L;
     private final Map<String, CartItem> itemMap = Collections.synchronizedMap(new HashMap<String, CartItem>());
     private final List<CartItem> itemList = new ArrayList<CartItem>();
@@ -36,6 +39,23 @@ public class Cart implements Serializable {
         return itemMap.containsKey(itemId);
     }
 
+    // 新增 getter / setter
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void addItem(Item item, boolean isInStock) {
         CartItem cartItem = (CartItem) itemMap.get(item.getItemId());
         if (cartItem == null) {
@@ -56,6 +76,15 @@ public class Cart implements Serializable {
         } else {
             itemList.remove(cartItem);
             return cartItem.getItem();
+        }
+    }
+
+    public int getQuantityByItemId(String itemId) {
+        CartItem cartItem = itemMap.get(itemId);
+        if (cartItem != null) {
+            return cartItem.getQuantity();
+        } else {
+            return 0;
         }
     }
 
