@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.example.petstore.domain.Account;
 import org.example.petstore.domain.Cart;
 import org.example.petstore.domain.Order;
+import org.example.petstore.persistence.LogDao;
 import org.example.petstore.service.OrderService;
 
 import java.io.IOException;
@@ -73,6 +74,9 @@ public class NewOrderConfirmedServlet extends HttpServlet {
                 //cart.clear();
             }
 
+            Account account = (Account) session.getAttribute("account");
+            String username = account.getUsername();
+            LogDao.addLog(username, "CREATE_ORDER", null, "created new order");
             // 提示信息
             req.setAttribute("message", "Thank you, your order has been submitted.");
             req.setAttribute("order", order);

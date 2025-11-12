@@ -9,6 +9,7 @@ import org.example.petstore.domain.Account;
 import org.example.petstore.domain.Cart;
 import org.example.petstore.domain.Item;
 import org.example.petstore.persistence.CartDao;
+import org.example.petstore.persistence.LogDao;
 import org.example.petstore.persistence.impl.CartDaoImpl;
 import org.example.petstore.service.CartService;
 import org.example.petstore.service.CatalogService;
@@ -51,6 +52,7 @@ public class AddItemToCartServlet extends HttpServlet {
             }
         }
         session.setAttribute("cart", cart);
+        LogDao.addLog(username, "ADD_TO_CART", workingItemId, "added item:  " + workingItemId + " to cart");
         // 改为重定向
         resp.sendRedirect(req.getContextPath() + "/cartForm");
     }
