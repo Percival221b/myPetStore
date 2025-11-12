@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SignOnServlet extends HttpServlet {
 
-    private static final String TOsignOnForm = "/WEB-INF/account/SignOn.jsp";
+    private static final String TOsignOnForm = "/WEB-INF/account/signonForm.jsp";
 
     private String username;
     private String password;

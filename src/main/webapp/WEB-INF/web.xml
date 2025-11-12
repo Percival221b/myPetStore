@@ -47,6 +47,14 @@
         <servlet-class>org.example.petstore.web.servlet.SignOnFormServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>NewAccountFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.NewAccountFormServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateAccountServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.CreateAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SignOnServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.SignOnServlet</servlet-class>
     </servlet>
@@ -114,6 +122,14 @@
     <servlet-mapping>
         <servlet-name>SignOnFormServlet</servlet-name>
         <url-pattern>/signOnForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewAccountFormServlet</servlet-name>
+        <url-pattern>/newAccountForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAccountServlet</servlet-name>
+        <url-pattern>/createAccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SignOnServlet</servlet-name>
