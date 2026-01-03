@@ -112,65 +112,76 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public void insertOrder(Order order) {
         String sql = """
-                INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
-                    SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
-                    COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
-                    CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+            INSERT INTO ORDERS (USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
+                SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
+                COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
+                CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, order.getOrderId());
-            ps.setString(2, order.getUsername());
-            ps.setTimestamp(3, new Timestamp(order.getOrderDate().getTime()));
-            ps.setString(4, order.getShipAddress1());
-            ps.setString(5, order.getShipAddress2());
-            ps.setString(6, order.getShipCity());
-            ps.setString(7, order.getShipState());
-            ps.setString(8, order.getShipZip());
-            ps.setString(9, order.getShipCountry());
-            ps.setString(10, order.getBillAddress1());
-            ps.setString(11, order.getBillAddress2());
-            ps.setString(12, order.getBillCity());
-            ps.setString(13, order.getBillState());
-            ps.setString(14, order.getBillZip());
-            ps.setString(15, order.getBillCountry());
-            ps.setString(16, order.getCourier());
-            ps.setBigDecimal(17, order.getTotalPrice());
-            ps.setString(18, order.getBillToFirstName());
-            ps.setString(19, order.getBillToLastName());
-            ps.setString(20, order.getShipToFirstName());
-            ps.setString(21, order.getShipToLastName());
-            ps.setString(22, order.getCreditCard());
-            ps.setString(23, order.getExpiryDate());
-            ps.setString(24, order.getCardType());
-            ps.setString(25, order.getLocale());
+            ps.setString(1, order.getUsername());
+            ps.setTimestamp(2, new Timestamp(order.getOrderDate().getTime()));
+            ps.setString(3, order.getShipAddress1());
+            ps.setString(4, order.getShipAddress2());
+            ps.setString(5, order.getShipCity());
+            ps.setString(6, order.getShipState());
+            ps.setString(7, order.getShipZip());
+            ps.setString(8, order.getShipCountry());
+            ps.setString(9, order.getBillAddress1());
+            ps.setString(10, order.getBillAddress2());
+            ps.setString(11, order.getBillCity());
+            ps.setString(12, order.getBillState());
+            ps.setString(13, order.getBillZip());
+            ps.setString(14, order.getBillCountry());
+            ps.setString(15, order.getCourier());
+            ps.setBigDecimal(16, order.getTotalPrice());
+            ps.setString(17, order.getBillToFirstName());
+            ps.setString(18, order.getBillToLastName());
+            ps.setString(19, order.getShipToFirstName());
+            ps.setString(20, order.getShipToLastName());
+            ps.setString(21, order.getCreditCard());
+            ps.setString(22, order.getExpiryDate());
+            ps.setString(23, order.getCardType());
+            ps.setString(24, order.getLocale());
 
+            // 执行插入并获取生成的订单ID
             ps.executeUpdate();
+
+            // 获取自动生成的订单ID
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int orderId = generatedKeys.getInt(1);
+                    order.setOrderId(orderId);  // 设置到订单对象中
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void insertOrderStatus(Order order) {
         String sql = """
-                INSERT INTO ORDERSTATUS (ORDERID, LINENUM, TIMESTAMP, STATUS)
-                VALUES (?, ?, ?, ?)
-                """;
+            INSERT INTO ORDERSTATUS (ORDERID, LINENUM, TIMESTAMP, STATUS)
+            VALUES (?, ?, ?, ?)
+            """;
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, order.getOrderId());
-            ps.setInt(2, order.getOrderId()); // MyBatis 写的是两次 orderId
+            ps.setInt(1, order.getOrderId());  // 使用刚刚插入的订单ID
+            ps.setInt(2, 1);  // 假设第一次状态的 `LINENUM` 是 1
             ps.setTimestamp(3, new Timestamp(order.getOrderDate().getTime()));
-            ps.setString(4, order.getStatus());
+            ps.setString(4, order.getStatus());  // 默认状态可以设置为 "CREATED"
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     private Order mapRow(ResultSet rs) throws SQLException {
         Order order = new Order();

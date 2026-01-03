@@ -1,32 +1,42 @@
 package org.example.petstore.web.servlet;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.example.petstore.domain.Cart;
-import org.example.petstore.domain.Item;
+import org.example.petstore.service.CartService;
 
 import java.io.IOException;
 
 public class RemoveCartItemServlet extends HttpServlet {
 
-    private static final String ERROR_FORM = "/WEB-INF/jsp/common/error.jsp";
-    private static final String CART_FORM = "/WEB-INF/jsp/cart/cart.jsp";
-
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        String workingItemId = req.getParameter("workingItemId");
-        Item item = cart.removeItemById(workingItemId);
+        String username = (String) session.getAttribute("username");
 
-        if (item == null) {
-            session.setAttribute("errorMsg", "Attempted to remove null CartItem from Cart.");
-            req.getRequestDispatcher(ERROR_FORM).forward(req, resp);
-        } else {
-            req.getRequestDispatcher(CART_FORM).forward(req, resp);
-        }
+        String itemId = req.getParameter("itemId");
+
+        CartService cartService = new CartService();
+
+        cart.removeItemById(itemId);
+
+        cartService.removeItemFromCart(username, itemId);
+
+        session.setAttribute("cart", cart);
+
+        resp.setContentType("application/json;charset=UTF-8");
+
+        boolean cartEmpty = cart.getNumberOfItems() == 0;
+
+        String json = "{"
+                + "\"success\":true,"
+                + "\"totalPrice\":" + cart.getSubTotal() + ","
+                + "\"cartEmpty\":" + cartEmpty
+                + "}";
+
+        resp.getWriter().write(json);
     }
 }

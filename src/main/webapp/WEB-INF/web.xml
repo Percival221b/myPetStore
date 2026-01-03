@@ -67,6 +67,10 @@
         <servlet-class>org.example.petstore.web.servlet.NewOrderConfirmedServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ConfirmOrderFormServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.ConfirmOrderFormServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ShippingFormServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.ShippingFormServlet</servlet-class>
     </servlet>
@@ -81,6 +85,10 @@
     <servlet>
         <servlet-name>ListOrdersServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.ListOrdersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.CaptchaServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -144,6 +152,10 @@
         <url-pattern>/newOrderConfirmed</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ConfirmOrderFormServlet</servlet-name>
+        <url-pattern>/confirmOrderForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ShippingFormServlet</servlet-name>
         <url-pattern>/shippingForm</url-pattern>
     </servlet-mapping>
@@ -158,6 +170,10 @@
     <servlet-mapping>
         <servlet-name>ListOrdersServlet</servlet-name>
         <url-pattern>/listOrders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaServlet</servlet-name>
+        <url-pattern>/captcha</url-pattern>
     </servlet-mapping>
 
 
