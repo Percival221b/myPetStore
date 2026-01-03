@@ -111,57 +111,74 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void insertOrder(Order order) {
+        // 获取当前最大ORDERID
+        int newOrderId = getMaxOrderId() + 1;  // 假设新订单ID是最大ID+1
+
         String sql = """
-            INSERT INTO ORDERS (USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
-                SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
-                COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
-                CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+        INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
+            SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
+            COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
+            CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = DBUtil.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, order.getUsername());
-            ps.setTimestamp(2, new Timestamp(order.getOrderDate().getTime()));
-            ps.setString(3, order.getShipAddress1());
-            ps.setString(4, order.getShipAddress2());
-            ps.setString(5, order.getShipCity());
-            ps.setString(6, order.getShipState());
-            ps.setString(7, order.getShipZip());
-            ps.setString(8, order.getShipCountry());
-            ps.setString(9, order.getBillAddress1());
-            ps.setString(10, order.getBillAddress2());
-            ps.setString(11, order.getBillCity());
-            ps.setString(12, order.getBillState());
-            ps.setString(13, order.getBillZip());
-            ps.setString(14, order.getBillCountry());
-            ps.setString(15, order.getCourier());
-            ps.setBigDecimal(16, order.getTotalPrice());
-            ps.setString(17, order.getBillToFirstName());
-            ps.setString(18, order.getBillToLastName());
-            ps.setString(19, order.getShipToFirstName());
-            ps.setString(20, order.getShipToLastName());
-            ps.setString(21, order.getCreditCard());
-            ps.setString(22, order.getExpiryDate());
-            ps.setString(23, order.getCardType());
-            ps.setString(24, order.getLocale());
+            // 设置新计算的 ORDERID
+            ps.setInt(1, newOrderId);
+            ps.setString(2, order.getUsername());
+            ps.setTimestamp(3, new Timestamp(order.getOrderDate().getTime()));
+            ps.setString(4, order.getShipAddress1());
+            ps.setString(5, order.getShipAddress2());
+            ps.setString(6, order.getShipCity());
+            ps.setString(7, order.getShipState());
+            ps.setString(8, order.getShipZip());
+            ps.setString(9, order.getShipCountry());
+            ps.setString(10, order.getBillAddress1());
+            ps.setString(11, order.getBillAddress2());
+            ps.setString(12, order.getBillCity());
+            ps.setString(13, order.getBillState());
+            ps.setString(14, order.getBillZip());
+            ps.setString(15, order.getBillCountry());
+            ps.setString(16, order.getCourier());
+            ps.setBigDecimal(17, order.getTotalPrice());
+            ps.setString(18, order.getBillToFirstName());
+            ps.setString(19, order.getBillToLastName());
+            ps.setString(20, order.getShipToFirstName());
+            ps.setString(21, order.getShipToLastName());
+            ps.setString(22, order.getCreditCard());
+            ps.setString(23, order.getExpiryDate());
+            ps.setString(24, order.getCardType());
+            ps.setString(25, order.getLocale());
 
-            // 执行插入并获取生成的订单ID
+            // 执行插入操作
             ps.executeUpdate();
 
-            // 获取自动生成的订单ID
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int orderId = generatedKeys.getInt(1);
-                    order.setOrderId(orderId);  // 设置到订单对象中
-                }
-            }
+            // 在插入后，将生成的 ORDERID 设置到订单对象中
+            order.setOrderId(newOrderId);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+    // 获取当前表中最大 ORDERID
+    private int getMaxOrderId() {
+        String sql = "SELECT MAX(ORDERID) FROM ORDERS";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);  // 返回当前最大 ORDERID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;  // 如果表中没有数据，返回 0
+    }
+
 
 
     @Override
@@ -181,7 +198,6 @@ public class OrderDaoImpl implements OrderDao {
             e.printStackTrace();
         }
     }
-
 
     private Order mapRow(ResultSet rs) throws SQLException {
         Order order = new Order();

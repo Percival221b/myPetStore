@@ -90,6 +90,22 @@
         <servlet-name>CaptchaServlet</servlet-name>
         <servlet-class>org.example.petstore.web.servlet.CaptchaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetPaymentDetailsServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.GetPaymentDetailsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetBillingAddressServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.GetBillingAddressServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetShippingAddressServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.GetShippingAddressServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetItemsServlet</servlet-name>
+        <servlet-class>org.example.petstore.web.servlet.GetItemsServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>MainFormServlet</servlet-name>
@@ -174,6 +190,22 @@
     <servlet-mapping>
         <servlet-name>CaptchaServlet</servlet-name>
         <url-pattern>/captcha</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetPaymentDetailsServlet</servlet-name>
+        <url-pattern>/getPaymentDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetBillingAddressServlet</servlet-name>
+        <url-pattern>/getBillingAddress</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetShippingAddressServlet</servlet-name>
+        <url-pattern>/getShippingAddress</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetItemsServlet</servlet-name>
+        <url-pattern>/getItems</url-pattern>
     </servlet-mapping>
 
 

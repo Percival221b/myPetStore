@@ -89,7 +89,7 @@
 
     </table>
 
-    <a href="viewOrder" class="Button">Confirm</a>
+    <a href="mainForm" class="Button">Confirm</a>
 
 </div>
 

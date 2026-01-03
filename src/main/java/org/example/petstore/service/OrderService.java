@@ -35,4 +35,5 @@ public class OrderService {
     public void insertLineItem(LineItem lineItem){lineItemDao.insertLineItem(lineItem);}
 
     public List<LineItem> getLineItemsByOrderId(int orderId){return lineItemDao.getLineItemsByOrderId(orderId);}
+
 }
