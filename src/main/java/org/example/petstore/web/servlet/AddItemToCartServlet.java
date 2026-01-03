@@ -22,9 +22,13 @@ public class AddItemToCartServlet extends HttpServlet {
     private final CartService cartService = new CartService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         String workingItemId = req.getParameter("workingItemId");
         HttpSession session = req.getSession();
         Account loginAccount = (Account) session.getAttribute("loginAccount");
+        if (loginAccount == null) {
+            resp.sendRedirect("signOnForm");
+        }
         String username = loginAccount.getUsername();
 
         Cart cart = (Cart) session.getAttribute("cart");
@@ -40,7 +44,7 @@ public class AddItemToCartServlet extends HttpServlet {
             if (cart.containsItemId(workingItemId)) {
                 cart.incrementQuantityByItemId(workingItemId);
                 int quantity = cart.getQuantityByItemId(workingItemId);
-                cartService.updateItemQuantity(cart.getCartId(), workingItemId, quantity);
+                cartService.updateItemQuantity(username, workingItemId, quantity);
             } else {
                 CatalogService catalogService = new CatalogService();
                 boolean isInStock = catalogService.isItemInStock(workingItemId);

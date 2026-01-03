@@ -5,6 +5,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.example.petstore.domain.Account;
+import org.example.petstore.domain.Cart;
+import org.example.petstore.domain.Order;
+import org.example.petstore.persistence.LogDao;
+import org.example.petstore.persistence.OrderDao;
+import org.example.petstore.service.OrderService;
 
 import java.io.IOException;
 
@@ -30,7 +36,28 @@ public class ShippingSubmitServlet extends HttpServlet {
         session.setAttribute("shipState", shipToState);
         session.setAttribute("shipZip", shipToZip);
         session.setAttribute("shipCountry", shipToCountry);
+        // 插入订单到数据库
+        OrderService orderService=new OrderService();
+        Order order = (Order) session.getAttribute("order");
+        orderService.insertOrder(order);
+        orderService.insertOrderStatus(order);
+
+        // 清空购物车
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart != null) {
+            //cart.clear();
+        }
+
+        Account account = (Account) session.getAttribute("account");
+        String username = account.getUsername();
+        LogDao.addLog(username, "CREATE_ORDER", null, "created new order");
+        // 提示信息
+        req.setAttribute("message", "Thank you, your order has been submitted.");
+        req.setAttribute("order", order);
+
+        // 转发到查看订单页面
         req.getRequestDispatcher(CONFIRM_ORDER).forward(req, resp);
+
     }
 
     @Override

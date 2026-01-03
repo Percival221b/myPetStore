@@ -111,4 +111,10 @@ public class Cart implements Serializable {
         return subTotal;
     }
 
+    // 新增清空购物车的方法
+    public void clear() {
+        itemMap.clear();  // 清空 itemMap 中的所有商品
+        itemList.clear(); // 清空 itemList 中的所有商品
+    }
+
 }

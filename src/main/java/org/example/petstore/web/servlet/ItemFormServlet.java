@@ -28,9 +28,11 @@ public class ItemFormServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("product", product);
         session.setAttribute("item", item);
-        Account account = (Account) session.getAttribute("account");
-        String username = account.getUsername();
-        LogDao.addLog(username, "VIEW_ITEM", itemId, "browsed item " + itemId);
+        Account account = (Account) session.getAttribute("loginAccount");
+        if (account != null) {
+            String username = account.getUsername();
+            LogDao.addLog(username, "VIEW_ITEM", itemId, "browsed item " + itemId);
+        }
         req.getRequestDispatcher(ITEM_FORM).forward(req, resp);
     }
 }

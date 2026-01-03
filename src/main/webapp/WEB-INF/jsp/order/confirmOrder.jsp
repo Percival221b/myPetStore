@@ -21,75 +21,75 @@
         </tr>
         <tr>
             <td>First name:</td>
-            <td><c:out value="${sessionScope.billToFirstName}" /></td>
+            <td><c:out value="${sessionScope.order.billToFirstName}" /></td>
         </tr>
         <tr>
             <td>Last name:</td>
-            <td><c:out value="${sessionScope.billToLastName}" /></td>
+            <td><c:out value="${sessionScope.order.billToLastName}" /></td>
         </tr>
         <tr>
             <td>Address 1:</td>
-            <td><c:out value="${sessionScope.billAddress1}" /></td>
+            <td><c:out value="${sessionScope.order.billAddress1}" /></td>
         </tr>
         <tr>
             <td>Address 2:</td>
-            <td><c:out value="${sessionScope.billAddress2}" /></td>
+            <td><c:out value="${sessionScope.order.billAddress2}" /></td>
         </tr>
         <tr>
             <td>City:</td>
-            <td><c:out value="${sessionScope.billCity}" /></td>
+            <td><c:out value="${sessionScope.order.billCity}" /></td>
         </tr>
         <tr>
             <td>State:</td>
-            <td><c:out value="${sessionScope.billState}" /></td>
+            <td><c:out value="${sessionScope.order.billState}" /></td>
         </tr>
         <tr>
             <td>Zip:</td>
-            <td><c:out value="${sessionScope.billZip}" /></td>
+            <td><c:out value="${sessionScope.order.billZip}" /></td>
         </tr>
         <tr>
             <td>Country:</td>
-            <td><c:out value="${sessionScope.billCountry}" /></td>
+            <td><c:out value="${sessionScope.order.billCountry}" /></td>
         </tr>
         <tr>
             <th colspan="2">Shipping Address</th>
         </tr>
         <tr>
             <td>First name:</td>
-            <td><c:out value="${sessionScope.shipToFirstName}" /></td>
+            <td><c:out value="${sessionScope.order.shipToFirstName}" /></td>
         </tr>
         <tr>
             <td>Last name:</td>
-            <td><c:out value="${sessionScope.shipToLastName}" /></td>
+            <td><c:out value="${sessionScope.order.shipToLastName}" /></td>
         </tr>
         <tr>
             <td>Address 1:</td>
-            <td><c:out value="${sessionScope.shipAddress1}" /></td>
+            <td><c:out value="${sessionScope.order.shipAddress1}" /></td>
         </tr>
         <tr>
             <td>Address 2:</td>
-            <td><c:out value="${sessionScope.shipAddress2}" /></td>
+            <td><c:out value="${sessionScope.order.shipAddress2}" /></td>
         </tr>
         <tr>
             <td>City:</td>
-            <td><c:out value="${sessionScope.shipCity}" /></td>
+            <td><c:out value="${sessionScope.order.shipCity}" /></td>
         </tr>
         <tr>
             <td>State:</td>
-            <td><c:out value="${sessionScope.shipState}" /></td>
+            <td><c:out value="${sessionScope.order.shipState}" /></td>
         </tr>
         <tr>
             <td>Zip:</td>
-            <td><c:out value="${sessionScope.shipZip}" /></td>
+            <td><c:out value="${sessionScope.order.shipZip}" /></td>
         </tr>
         <tr>
             <td>Country:</td>
-            <td><c:out value="${sessionScope.shipCountry}" /></td>
+            <td><c:out value="${sessionScope.order.shipCountry}" /></td>
         </tr>
 
     </table>
 
-    <a href="viewOrder" class="Button">Confirm</a>
+    <a href="mainForm" class="Button">Confirm</a>
 
 </div>
 

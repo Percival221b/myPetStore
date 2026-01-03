@@ -1,154 +1,81 @@
 <%@ include file="../common/top.jsp"%>
-<div id="BackLink">
-    <a href="categoryForm?categoryId=${sessionScope.category.categoryId}">Return to ${sessionScope.category.name}</a>
-</div>
+
 <div id="Catalog">
 
-    <table>
-        <tr>
-            <th align="center" colspan="2">Order #${sessionScope.order.orderId}
-                <fmt:formatDate value="${sessionScope.order.orderDate}"
-                                pattern="yyyy/MM/dd hh:mm:ss" /></th>
-        </tr>
-        <tr>
-            <th colspan="2">Payment Details</th>
-        </tr>
-        <tr>
-            <td>Card Type:</td>
-            <td><c:out value="${sessionScope.order.cardType}" /></td>
-        </tr>
-        <tr>
-            <td>Card Number:</td>
-            <td><c:out value="${sessionScope.order.creditCard}" /> * Fake
-                number!</td>
-        </tr>
-        <tr>
-            <td>Expiry Date (MM/YYYY):</td>
-            <td><c:out value="${sessionScope.order.expiryDate}" /></td>
-        </tr>
-        <tr>
-            <th colspan="2">Billing Address</th>
-        </tr>
-        <tr>
-            <td>First name:</td>
-            <td><c:out value="${sessionScope.order.billToFirstName}" /></td>
-        </tr>
-        <tr>
-            <td>Last name:</td>
-            <td><c:out value="${sessionScope.order.billToLastName}" /></td>
-        </tr>
-        <tr>
-            <td>Address 1:</td>
-            <td><c:out value="${sessionScope.order.billAddress1}" /></td>
-        </tr>
-        <tr>
-            <td>Address 2:</td>
-            <td><c:out value="${sessionScope.order.billAddress2}" /></td>
-        </tr>
-        <tr>
-            <td>City:</td>
-            <td><c:out value="${sessionScope.order.billCity}" /></td>
-        </tr>
-        <tr>
-            <td>State:</td>
-            <td><c:out value="${sessionScope.order.billState}" /></td>
-        </tr>
-        <tr>
-            <td>Zip:</td>
-            <td><c:out value="${sessionScope.order.billZip}" /></td>
-        </tr>
-        <tr>
-            <td>Country:</td>
-            <td><c:out value="${sessionScope.order.billCountry}" /></td>
-        </tr>
-        <tr>
-            <th colspan="2">Shipping Address</th>
-        </tr>
-        <tr>
-            <td>First name:</td>
-            <td><c:out value="${sessionScope.order.shipToFirstName}" /></td>
-        </tr>
-        <tr>
-            <td>Last name:</td>
-            <td><c:out value="${sessionScope.order.shipToLastName}" /></td>
-        </tr>
-        <tr>
-            <td>Address 1:</td>
-            <td><c:out value="${sessionScope.order.shipAddress1}" /></td>
-        </tr>
-        <tr>
-            <td>Address 2:</td>
-            <td><c:out value="${sessionScope.order.shipAddress2}" /></td>
-        </tr>
-        <tr>
-            <td>City:</td>
-            <td><c:out value="${sessionScope.order.shipCity}" /></td>
-        </tr>
-        <tr>
-            <td>State:</td>
-            <td><c:out value="${sessionScope.order.shipState}" /></td>
-        </tr>
-        <tr>
-            <td>Zip:</td>
-            <td><c:out value="${sessionScope.order.shipZip}" /></td>
-        </tr>
-        <tr>
-            <td>Country:</td>
-            <td><c:out value="${sessionScope.order.shipCountry}" /></td>
-        </tr>
-        <tr>
-            <td>Courier:</td>
-            <td><c:out value="${sessionScope.order.courier}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">Status: <c:out value="${sessionScope.order.status}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <th>Item ID</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Total Cost</th>
-                    </tr>
-                    <c:forEach var="lineItem" items="${sessionScope.order.lineItems}">
-                        <tr>
-                            <td><stripes:link
-                                    beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
-                                    event="viewItem">
-                                <stripes:param name="itemId" value="${lineItem.item.itemId}" />
-                                ${lineItem.item.itemId}
-                            </stripes:link></td>
-                            <td><c:if test="${lineItem.item != null}">
-                                ${lineItem.item.attribute1}
-                                ${lineItem.item.attribute2}
-                                ${lineItem.item.attribute3}
-                                ${lineItem.item.attribute4}
-                                ${lineItem.item.attribute5}
-                                ${lineItem.item.product.name}
-                            </c:if> <c:if test="${lineItem.item == null}">
-                                <i>{description unavailable}</i>
-                            </c:if></td>
+    <!-- 选项卡 -->
+    <div class="tabs">
+        <button class="tablinks" onclick="openTab(event, 'PaymentDetails')">Payment Details</button>
+        <button class="tablinks" onclick="openTab(event, 'BillingAddress')">Billing Address</button>
+        <button class="tablinks" onclick="openTab(event, 'ShippingAddress')">Shipping Address</button>
+        <button class="tablinks" onclick="openTab(event, 'Items')">Items</button>
+    </div>
 
-                            <td>${lineItem.quantity}</td>
-                            <td><fmt:formatNumber value="${lineItem.unitPrice}"
-                                                  pattern="$#,##0.00" /></td>
-                            <td><fmt:formatNumber value="${lineItem.total}"
-                                                  pattern="$#,##0.00" /></td>
-                        </tr>
-                    </c:forEach>
-                    <tr>
-                        <th colspan="5">Total: <fmt:formatNumber
-                                value="${sessionScope.order.totalPrice}" pattern="$#,##0.00" /></th>
-                    </tr>
-                </table>
-            </td>
-        </tr>
 
-    </table>
+    <!-- Tab内容 -->
+    <div id="PaymentDetails" class="tabcontent">
+        <!-- 通过AJAX加载 -->
+    </div>
+
+    <div id="BillingAddress" class="tabcontent">
+        <!-- 通过AJAX加载 -->
+    </div>
+
+    <div id="ShippingAddress" class="tabcontent">
+        <!-- 通过AJAX加载 -->
+    </div>
+
+    <div id="Items" class="tabcontent">
+        <!-- 通过AJAX加载 -->
+    </div>
 
 </div>
 
 <%@ include file="../common/bottom.jsp"%>
+
+<script>
+    // 用来切换tab
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // 加载订单的不同部分
+    function loadOrderDetails() {
+        // Load Payment Details
+        loadTabContent('PaymentDetails', 'getPaymentDetails');
+        // Load Billing Address
+        loadTabContent('BillingAddress', 'getBillingAddress');
+        // Load Shipping Address
+        loadTabContent('ShippingAddress', 'getShippingAddress');
+        // Load Items
+        loadTabContent('Items', 'getItems');
+    }
+
+    // 通用AJAX加载函数
+    function loadTabContent(tabId, endpoint) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '<%=request.getContextPath()%>/' + endpoint + '?orderId=${sessionScope.order.orderId}', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                document.getElementById(tabId).innerHTML = xhr.responseText;
+            } else {
+                document.getElementById(tabId).innerHTML = 'Failed to load content.';
+            }
+        };
+        xhr.send();
+    }
+
+    // 当页面加载时自动调用
+    window.onload = function () {
+        loadOrderDetails();
+    };
+</script>

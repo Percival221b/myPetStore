@@ -16,11 +16,12 @@ public class CartService {
     public void addItemToCart(int cartId, Item item, boolean inStock){
         cartDao.addItemToCart(cartId, item, inStock);
     }
-    public void updateItemQuantity(int cartId, String itemId, int quantity){
-        cartDao.updateItemQuantity(cartId, itemId, quantity);
+    public void updateItemQuantity(String username, String itemId, int quantity){
+        cartDao.updateItemQuantity(username, itemId, quantity);
     }
-    public void removeItemFromCart(int cartId, String itemId){
-        cartDao.removeItemFromCart(cartId, itemId);
+
+    public void removeItemFromCart(String username, String itemId){
+        cartDao.removeItemFromCart(username, itemId);
     }
     public void clearCart(int cartId){
         cartDao.clearCart(cartId);

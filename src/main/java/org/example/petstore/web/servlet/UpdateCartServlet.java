@@ -1,40 +1,59 @@
 package org.example.petstore.web.servlet;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.example.petstore.domain.Cart;
 import org.example.petstore.domain.CartItem;
+import org.example.petstore.service.CartService;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 public class UpdateCartServlet extends HttpServlet {
 
-    private static final String CART_FORM = "/WEB-INF/jsp/cart/cart.jsp";
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
         HttpSession session = req.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        Iterator<CartItem> cartItems = cart.getAllCartItems();
+        String username = (String) session.getAttribute("username");
 
-        while (cartItems.hasNext()) {
-            CartItem cartItem = (CartItem) cartItems.next();
-            String itemId = cartItem.getItem().getItemId();
-            try {
-                String quantityString = req.getParameter(itemId);
-                int quantity = Integer.parseInt(quantityString);
-                cart.setQuantityByItemId(itemId, quantity);
-                if (quantity < 1) {
-                    cartItems.remove();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        String itemId = req.getParameter("itemId");
+        String quantityStr = req.getParameter("quantity");
+
+        CartService cartService = new CartService();
+
+        int quantity = Integer.parseInt(quantityStr);
+
+        if (quantity < 1) {
+            cart.removeItemById(itemId);
+            cartService.removeItemFromCart(username, itemId);
+        } else {
+            cart.setQuantityByItemId(itemId, quantity);
+            cartService.updateItemQuantity(username, itemId, quantity);
+        }
+
+        CartItem cartItem = null;
+        Iterator<CartItem> iterator = cart.getAllCartItems();
+        while (iterator.hasNext()) {
+            CartItem ci = iterator.next();
+            if (ci.getItem().getItemId().equals(itemId)) {
+                cartItem = ci;
+                break;
             }
         }
-        req.getRequestDispatcher(CART_FORM).forward(req, resp);
+
+        session.setAttribute("cart", cart);
+
+        resp.setContentType("application/json;charset=UTF-8");
+
+        String json = "{"
+                + "\"success\":true,"
+                + "\"subtotal\":" + (cartItem == null ? 0 : cartItem.getTotal()) + ","
+                + "\"totalPrice\":" + cart.getSubTotal()
+                + "}";
+
+        resp.getWriter().write(json);
     }
 }

@@ -111,18 +111,22 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void insertOrder(Order order) {
+        // 获取当前最大ORDERID
+        int newOrderId = getMaxOrderId() + 1;  // 假设新订单ID是最大ID+1
+
         String sql = """
-                INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
-                    SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
-                    COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
-                    CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
+        INSERT INTO ORDERS (ORDERID, USERID, ORDERDATE, SHIPADDR1, SHIPADDR2, SHIPCITY, SHIPSTATE,
+            SHIPZIP, SHIPCOUNTRY, BILLADDR1, BILLADDR2, BILLCITY, BILLSTATE, BILLZIP, BILLCOUNTRY,
+            COURIER, TOTALPRICE, BILLTOFIRSTNAME, BILLTOLASTNAME, SHIPTOFIRSTNAME, SHIPTOLASTNAME,
+            CREDITCARD, EXPRDATE, CARDTYPE, LOCALE)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, order.getOrderId());
+            // 设置新计算的 ORDERID
+            ps.setInt(1, newOrderId);
             ps.setString(2, order.getUsername());
             ps.setTimestamp(3, new Timestamp(order.getOrderDate().getTime()));
             ps.setString(4, order.getShipAddress1());
@@ -148,24 +152,47 @@ public class OrderDaoImpl implements OrderDao {
             ps.setString(24, order.getCardType());
             ps.setString(25, order.getLocale());
 
+            // 执行插入操作
             ps.executeUpdate();
+
+            // 在插入后，将生成的 ORDERID 设置到订单对象中
+            order.setOrderId(newOrderId);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    // 获取当前表中最大 ORDERID
+    private int getMaxOrderId() {
+        String sql = "SELECT MAX(ORDERID) FROM ORDERS";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);  // 返回当前最大 ORDERID
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;  // 如果表中没有数据，返回 0
+    }
+
+
+
     @Override
     public void insertOrderStatus(Order order) {
         String sql = """
-                INSERT INTO ORDERSTATUS (ORDERID, LINENUM, TIMESTAMP, STATUS)
-                VALUES (?, ?, ?, ?)
-                """;
+            INSERT INTO ORDERSTATUS (ORDERID, LINENUM, TIMESTAMP, STATUS)
+            VALUES (?, ?, ?, ?)
+            """;
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, order.getOrderId());
-            ps.setInt(2, order.getOrderId()); // MyBatis 写的是两次 orderId
+            ps.setInt(1, order.getOrderId());  // 使用刚刚插入的订单ID
+            ps.setInt(2, 1);  // 假设第一次状态的 `LINENUM` 是 1
             ps.setTimestamp(3, new Timestamp(order.getOrderDate().getTime()));
-            ps.setString(4, order.getStatus());
+            ps.setString(4, order.getStatus());  // 默认状态可以设置为 "CREATED"
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

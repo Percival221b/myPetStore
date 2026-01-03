@@ -12,4 +12,5 @@ public interface OrderDao {
     public void insertOrder(Order order);
 
     public void insertOrderStatus(Order order);
+
 }
